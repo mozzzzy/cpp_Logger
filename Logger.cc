@@ -74,21 +74,21 @@ void Logger::printToFile(std::string message, enum log_level write_level) {
 			if (log_to_standard_out != 1){
 				out_file << datetime << " [ERROR] " + message << std::endl;
 			}else{
-				std::cout << datetime << " [ERROR] " + message << std::endl;
+				std::cout << datetime << " [" << "\x1b[31m" << "ERROR" << "\x1b[39m" << "] " <<  message << std::endl;
 			}
 
 		} else if (write_level == WARNING) {
 			if (log_to_standard_out != 1){
 				out_file << datetime << " [WARNING] " + message << std::endl;
 			}else{
-				std::cout << datetime << " [WARNING] " + message << std::endl;
+				std::cout << datetime << " [" << "\x1b[33m" << "WARNING" << "\x1b[39m" << "] " << message << std::endl;
 			}
 
 		} else if (write_level == INFO) {
 			if (log_to_standard_out != 1){
 				out_file << datetime << " [INFO] " + message << std::endl;
 			}else{
-				std::cout << datetime << " [INFO] " + message << std::endl;
+				std::cout << datetime << " [" << "\x1b[32m" << "INFO" << "\x1b[39m" << "] " << message << std::endl;
 			}
 
 		} else if (write_level == DEBUG) {
