@@ -58,7 +58,7 @@ Logger::~Logger() {
 //   std::string message : log message.
 //   enum log_level write_level : write level of this log message.
 void Logger::printToFile(std::string message, enum log_level write_level) {
-	if (log_level > write_level ) {	// if enable to write
+	if (log_level >= write_level ) {	// if enable to write
 
 		// get timestamp
 		time_t timer;

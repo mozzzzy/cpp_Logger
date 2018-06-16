@@ -1,0 +1,4 @@
+2018-06-17 00:47:17 [ERROR] this is test error message.
+2018-06-17 00:47:17 [WARNING] this is test warning message.
+2018-06-17 00:47:17 [INFO] this is test info message.
+2018-06-17 00:47:17 [DEBUG] this is test debug message.
