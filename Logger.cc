@@ -1,14 +1,32 @@
+#include <iostream>
 #include "Logger.h"
 
 
-// configure Logger
+// configure Logger. this configure method is used when we want to write log messages to log file.
 void Logger::configLogger(std::string input_log_file_path, enum log_level input_level) {
 	// set log file path
 	log_file_path = input_log_file_path;
 	// set log level
 	log_level = input_level;
-	// open log file
-	out_file.open(log_file_path, std::ios::out|std::ios::app);
+
+	if(log_file_path != ""){
+		// open log file
+		out_file.open(log_file_path, std::ios::out|std::ios::app);
+		log_to_standard_out = 0;	// write log message to log file, not standard out.
+	}else{
+		// if log_file_path == "", log message is wrote to standard out
+		log_to_standard_out = 1;
+	}
+}
+
+// configure Logger. this configure method is used when we want to write log messages to standard output.
+void Logger::configLogger(enum log_level input_level) {
+	// set log level
+	log_level = input_level;
+
+	// if log_file_path == "", log message is wrote to standard out
+	log_to_standard_out = 1;
+
 }
 
 
@@ -16,10 +34,17 @@ void Logger::configLogger(std::string input_log_file_path, enum log_level input_
 Logger::Logger() {}
 
 
-// constructor
+// constructor when write to log file.
 Logger::Logger(std::string input_log_file_path, enum log_level input_level) {
 	configLogger(input_log_file_path, input_level);
 }
+
+
+// constructor when write to standard out.
+Logger::Logger(enum log_level input_level) {
+	configLogger("", input_level);
+}
+
 
 
 // destructor
@@ -46,13 +71,32 @@ void Logger::printToFile(std::string message, enum log_level write_level) {
 		
 		// write log message to file with timestamp and log level 
 		if (write_level == ERROR) {
-			out_file << datetime << " [ERROR] " + message << std::endl;
+			if (log_to_standard_out != 1){
+				out_file << datetime << " [ERROR] " + message << std::endl;
+			}else{
+				std::cout << datetime << " [ERROR] " + message << std::endl;
+			}
+
 		} else if (write_level == WARNING) {
-			out_file << datetime << " [WARNING] " + message << std::endl;
+			if (log_to_standard_out != 1){
+				out_file << datetime << " [WARNING] " + message << std::endl;
+			}else{
+				std::cout << datetime << " [WARNING] " + message << std::endl;
+			}
+
 		} else if (write_level == INFO) {
-			out_file << datetime << " [INFO] " + message << std::endl;
+			if (log_to_standard_out != 1){
+				out_file << datetime << " [INFO] " + message << std::endl;
+			}else{
+				std::cout << datetime << " [INFO] " + message << std::endl;
+			}
+
 		} else if (write_level == DEBUG) {
-			out_file << datetime << " [DEBUG] " + message << std::endl;
+			if (log_to_standard_out != 1){
+				out_file << datetime << " [DEBUG] " + message << std::endl;
+			}else{
+				std::cout << datetime << " [DEBUG] " + message << std::endl;
+			}
 		}
 	}
 }
